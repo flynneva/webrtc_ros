@@ -12,7 +12,10 @@ find_package(catkin REQUIRED COMPONENTS
 )
 find_package(webrtc REQUIRED)
 find_package(X11 REQUIRED)
-find_package(jsoncpp REQUIRED)
+
+pkg_check_modules(JSONCPP jsoncpp)
+link_libraries(${JSONCPP_LIBRARIES})
+#find_package(jsoncpp REQUIRED)
 
 add_message_files(
     FILES
@@ -54,6 +57,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${webrtc_INCLUDE_DIRS}
+  ${JSONCPP_INCLUDE_DIRS}
 )
 add_definitions(${webrtc_DEFINITIONS})
 
@@ -92,7 +96,7 @@ target_link_libraries(${PROJECT_NAME}_server
   ${catkin_LIBRARIES}
   ${webrtc_LIBRARIES}
   ${X11_LIBRARIES}
-  jsoncpp_object
+  ${JSONCPP_LIBRARIES}
 )
 
 set_target_properties(${PROJECT_NAME}_server PROPERTIES COMPILE_OPTIONS "-std=c++14")
